@@ -17,6 +17,11 @@
 # include <stdlib.h>
 # include <stdio.h>
 
+int		ft_is_buf_only_minus_one(char *buf);
+int		ft_strdup_line(char *buf, char **line, int len);
+int		ft_strdup_start_of_line(char *buf, char **line, int len);
+int		ft_strdup_continuation_of_line(char *buf, char **line,
+		int prev_len, int len);
 int		ft_strdup_line(char *buf, char **line, int len);
 int		get_next_line(int fd, char **line);
 
