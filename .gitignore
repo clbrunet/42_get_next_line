@@ -1,7 +1,7 @@
 a.out
 **/*.o
 t1
+t2
 compile_flags.txt
 GNL_lover/
-gnl-unit-test/
-get-next-line-testing-tools/
+42TESTERS-GNL/

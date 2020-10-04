@@ -5,7 +5,7 @@ SRCS	=	main.c				\
 OBJS	=	$(SRCS:.c=.o)
 
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -D BUFFER_SIZE=50
+CFLAGS	=	-Wall -Wextra -Werror -D BUFFER_SIZE=2
 
 $(NAME)	:	$(OBJS)
 			gcc $(OBJS)

@@ -39,10 +39,10 @@ int		main(int ac, char **av)
 		total = 0;
 		while ((res = get_next_line(fd, &line)) > 0)
 		{
-			printf("|%s|\n", line);
-			free(line);
+			printf("|%s| res : %i\n", line, res);
 			total += res;
 		}
+		printf("|%s| res : %i\n", line, res);
 		printf("total : %i\n", total);
 		close(fd);
 		i++;

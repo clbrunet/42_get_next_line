@@ -82,12 +82,12 @@ int		ft_strdup_line(char *buf, char **line, int prev_len)
 
 int		get_next_line(int fd, char **line)
 {
-	static char	buf[100][BUFFER_SIZE + 1] = {0};
+	static char	buf[250][BUFFER_SIZE + 1] = {0};
 	int			bytes_read;
 	int			len;
 	int			have_to_read;
 
-	if (BUFFER_SIZE == 0 || fd < 0 || !line || fd > 99)
+	if (BUFFER_SIZE == 0 || fd < 0 || !line)
 		return (-1);
 	len = 0;
 	buf[fd][0] = (ft_is_buf_only_minus_one(buf[fd])) ? 0 : buf[fd][0];
