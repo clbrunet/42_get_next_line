@@ -6,19 +6,25 @@
 /*   By: clemo <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/19 10:33:16 by clemo             #+#    #+#             */
-/*   Updated: 2020/09/19 10:33:16 by clemo            ###   ########.fr       */
+/*   Updated: 2020/10/05 22:39:09 by clbrunet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		ft_is_buf_only_minus_one(char *buf)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	while (*buf)
+	const char	*dst_bp;
+
+	if (!dst || !src)
+		return (0);
+	dst_bp = dst;
+	while (*src)
 	{
-		if (*buf != -1)
-			return (0);
-		buf++;
+		*dst = *src;
+		dst++;
+		src++;
 	}
-	return (1);
+	*dst = 0;
+	return ((char *)dst_bp);
 }

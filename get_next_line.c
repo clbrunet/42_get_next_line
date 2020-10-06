@@ -6,42 +6,36 @@
 /*   By: clemo <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 18:01:40 by clemo             #+#    #+#             */
-/*   Updated: 2020/10/04 13:06:00 by clbrunet         ###   ########.fr       */
+/*   Updated: 2020/10/05 16:42:52 by clbrunet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		ft_strdup_start_of_line(char *buf, char **line, int len)
+static int		ft_strdup_start_of_line(char *buf, char **line, int len)
 {
 	int		i;
+	char	*buf_bp;
 
 	if (!(*line = malloc((len + 1) * sizeof(char))))
 		return (-1);
+	buf_bp = buf;
 	i = 0;
-	while (*buf && *buf != '\n')
-	{
-		line[0][i++] = *buf;
-		*(buf++) = -1;
-	}
+	while (i < len)
+		line[0][i++] = *(buf++);
 	line[0][i] = 0;
 	if (!*buf)
 		return (i);
-	*buf = -1;
+	ft_strcpy(buf_bp, buf + 1);
 	return (0);
 }
 
-/*
-**	TODO
-**	change dup_start_of_line in a simple strdup_wlen in dup_continuation_of_line
-**	opti possible when buf[0] = '\n' in dup_continuation_of_line
-*/
-
-int		ft_strdup_continuation_of_line(char *buf, char **line,
+static int		ft_strdup_continuation_of_line(char *buf, char **line,
 		int prev_len, int len)
 {
 	char	*tmp;
 	int		i;
+	char	*buf_bp;
 
 	ft_strdup_start_of_line(*line, &tmp, prev_len);
 	free(*line);
@@ -51,27 +45,23 @@ int		ft_strdup_continuation_of_line(char *buf, char **line,
 		return (-1);
 	}
 	i = 0;
-	while (*tmp)
+	while (i < prev_len)
 		line[0][i++] = *(tmp++);
 	free(tmp - i);
-	while (*buf && *buf != '\n')
-	{
-		line[0][i++] = *buf;
-		*(buf++) = -1;
-	}
+	buf_bp = buf;
+	while (i < prev_len + len)
+		line[0][i++] = *(buf++);
 	line[0][i] = 0;
 	if (!*buf)
 		return (i);
-	*buf = -1;
+	ft_strcpy(buf_bp, buf + 1);
 	return (0);
 }
 
-int		ft_strdup_line(char *buf, char **line, int prev_len)
+static int		ft_strdup_line(char *buf, char **line, int prev_len)
 {
 	char	*s;
 
-	while (*buf == -1)
-		buf++;
 	s = buf;
 	while (*s && *s != '\n')
 		s++;
@@ -80,35 +70,43 @@ int		ft_strdup_line(char *buf, char **line, int prev_len)
 	return (ft_strdup_continuation_of_line(buf, line, prev_len, s - buf));
 }
 
-int		get_next_line(int fd, char **line)
+static int		last_return(int bytes_read, int len, char **line, char *buf)
 {
-	static char	buf[100][BUFFER_SIZE + 1] = {0};
+	int			i;
+
+	if (bytes_read == -1)
+		return (-1);
+	else if (!len)
+	{
+		if (!(*line = malloc(sizeof(char))))
+			return (-1);
+		**line = 0;
+		return (0);
+	}
+	i = 0;
+	while (i < BUFFER_SIZE + 1)
+		buf[i++] = 0;
+	return (0);
+}
+
+int			get_next_line(int fd, char **line)
+{
+	static char	bufs[100][BUFFER_SIZE + 1] = {0};
 	int			bytes_read;
 	int			len;
 	int			have_to_read;
 
-	if (BUFFER_SIZE == 0 || fd < 0 || !line || fd > 99)
+	if (BUFFER_SIZE <= 0 || fd < 0 || !line || fd > 99)
 		return (-1);
 	len = 0;
-	buf[fd][0] = (ft_is_buf_only_minus_one(buf[fd])) ? 0 : buf[fd][0];
-	have_to_read = !(buf[fd][0]);
-	while (!have_to_read || (bytes_read = read(fd, buf[fd], BUFFER_SIZE)) > 0)
+	have_to_read = !(bufs[fd][0]);
+	while (!have_to_read || (bytes_read = read(fd, bufs[fd], BUFFER_SIZE)) > 0)
 	{
 		if (have_to_read)
-			buf[fd][bytes_read] = 0;
-		if ((len = ft_strdup_line(buf[fd], line, len)) == -1)
-			return (-1);
-		else if (!len)
-			return (1);
+			bufs[fd][bytes_read] = 0;
+		if ((len = ft_strdup_line(bufs[fd], line, len)) <= 0)
+			return ((len == -1) ? -1 : 1);
 		have_to_read = 1;
 	}
-	if (bytes_read == -1)
-		return (-1);
-	if (!len)
-	{
-		if (!(*line = malloc(sizeof(char))))
-			return (0);
-		**line = 0;
-	}
-	return (0);
+	return (last_return(bytes_read, len, line, bufs[fd]));
 }
