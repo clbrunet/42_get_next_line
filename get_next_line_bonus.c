@@ -6,7 +6,7 @@
 /*   By: clemo <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/18 18:01:40 by clemo             #+#    #+#             */
-/*   Updated: 2020/10/05 16:42:52 by clbrunet         ###   ########.fr       */
+/*   Updated: 2020/10/08 14:36:23 by clbrunet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ static int		ft_strdup_continuation_of_line(char *buf, char **line,
 	int		i;
 	char	*buf_bp;
 
-	ft_strdup_start_of_line(*line, &tmp, prev_len);
+	if (!(tmp = malloc((prev_len + 1) * sizeof(char))))
+		return (-1);
+	ft_strcpy(tmp, *line);
 	free(*line);
 	if (!(*line = malloc((prev_len + len + 1) * sizeof(char))))
 	{
@@ -70,7 +72,7 @@ static int		ft_strdup_line(char *buf, char **line, int prev_len)
 	return (ft_strdup_continuation_of_line(buf, line, prev_len, s - buf));
 }
 
-static int		last_return(int bytes_read, int len, char **line, char *buf)
+static int		end(int bytes_read, int len, char **line, char *buf)
 {
 	int			i;
 
@@ -78,9 +80,7 @@ static int		last_return(int bytes_read, int len, char **line, char *buf)
 		return (-1);
 	else if (!len)
 	{
-		if (!(*line = malloc(sizeof(char))))
-			return (-1);
-		**line = 0;
+		*line = NULL;
 		return (0);
 	}
 	i = 0;
@@ -108,5 +108,5 @@ int			get_next_line(int fd, char **line)
 			return ((len == -1) ? -1 : 1);
 		have_to_read = 1;
 	}
-	return (last_return(bytes_read, len, line, bufs[fd]));
+	return (end(bytes_read, len, line, bufs[fd]));
 }
