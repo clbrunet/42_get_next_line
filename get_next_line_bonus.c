@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clemo <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: clbrunet <clbrunet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/18 18:01:40 by clemo             #+#    #+#             */
-/*   Updated: 2020/10/08 14:36:23 by clbrunet         ###   ########.fr       */
+/*   Created: 2020/11/13 06:54:38 by clbrunet          #+#    #+#             */
+/*   Updated: 2020/11/13 06:54:38 by clbrunet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,11 @@ int			get_next_line(int fd, char **line)
 		if (have_to_read)
 			bufs[fd][bytes_read] = 0;
 		if ((len = ft_strdup_line(bufs[fd], line, len)) <= 0)
-			return ((len == -1) ? -1 : 1);
+		{
+			if (len == -1)
+				return (-1);
+			return (1);
+		}
 		have_to_read = 1;
 	}
 	return (end(bytes_read, len, line, bufs[fd]));
