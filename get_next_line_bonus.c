@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clbrunet <clbrunet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/13 06:54:38 by clbrunet          #+#    #+#             */
-/*   Updated: 2020/11/13 06:54:38 by clbrunet         ###   ########.fr       */
+/*   Created: 2020/11/17 11:54:49 by clbrunet          #+#    #+#             */
+/*   Updated: 2020/11/17 11:54:49 by clbrunet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ static int		end(int bytes_read, int len, char **line, char *buf)
 		return (-1);
 	else if (!len)
 	{
-		*line = NULL;
+		*line = malloc(sizeof(char));
+		line[0][0] = '\0';
 		return (0);
 	}
 	i = 0;
@@ -91,7 +92,7 @@ static int		end(int bytes_read, int len, char **line, char *buf)
 
 int			get_next_line(int fd, char **line)
 {
-	static char	bufs[100][BUFFER_SIZE + 1] = {0};
+	static char	bufs[100][BUFFER_SIZE + 1] = {{0}};
 	int			bytes_read;
 	int			len;
 	int			have_to_read;
