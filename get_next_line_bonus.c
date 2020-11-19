@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: clbrunet <clbrunet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/17 11:54:49 by clbrunet          #+#    #+#             */
-/*   Updated: 2020/11/17 11:54:49 by clbrunet         ###   ########.fr       */
+/*   Created: 2020/11/19 15:29:11 by clbrunet          #+#    #+#             */
+/*   Updated: 2020/11/19 15:29:11 by clbrunet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int		ft_strdup_start_of_line(char *buf, char **line, int len)
+static int	ft_strdup_start_of_line(char *buf, char **line, int len)
 {
 	int		i;
 	char	*buf_bp;
@@ -30,7 +30,7 @@ static int		ft_strdup_start_of_line(char *buf, char **line, int len)
 	return (0);
 }
 
-static int		ft_strdup_continuation_of_line(char *buf, char **line,
+static int	ft_strdup_continuation_of_line(char *buf, char **line,
 		int prev_len, int len)
 {
 	char	*tmp;
@@ -60,7 +60,7 @@ static int		ft_strdup_continuation_of_line(char *buf, char **line,
 	return (0);
 }
 
-static int		ft_strdup_line(char *buf, char **line, int prev_len)
+static int	ft_strdup_line(char *buf, char **line, int prev_len)
 {
 	char	*s;
 
@@ -72,7 +72,7 @@ static int		ft_strdup_line(char *buf, char **line, int prev_len)
 	return (ft_strdup_continuation_of_line(buf, line, prev_len, s - buf));
 }
 
-static int		end(int bytes_read, int len, char **line, char *buf)
+static int	end(int bytes_read, int len, char **line, char *buf)
 {
 	int			i;
 
@@ -92,12 +92,12 @@ static int		end(int bytes_read, int len, char **line, char *buf)
 
 int			get_next_line(int fd, char **line)
 {
-	static char	bufs[100][BUFFER_SIZE + 1] = {{0}};
+	static char	bufs[513][BUFFER_SIZE + 1] = {{0}};
 	int			bytes_read;
 	int			len;
 	int			have_to_read;
 
-	if (BUFFER_SIZE <= 0 || fd < 0 || !line || fd > 99)
+	if (BUFFER_SIZE <= 0 || fd < 0 || !line || fd > 512)
 		return (-1);
 	len = 0;
 	have_to_read = !(bufs[fd][0]);
