@@ -6,11 +6,11 @@
 /*   By: clbrunet <clbrunet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 15:31:09 by clbrunet          #+#    #+#             */
-/*   Updated: 2020/11/19 16:02:37 by clbrunet         ###   ########.fr       */
+/*   Updated: 2020/11/20 06:03:55 by clbrunet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strcpy(char *dst, const char *src)
 {

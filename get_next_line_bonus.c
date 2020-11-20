@@ -6,11 +6,11 @@
 /*   By: clbrunet <clbrunet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 15:29:11 by clbrunet          #+#    #+#             */
-/*   Updated: 2020/11/19 15:29:11 by clbrunet         ###   ########.fr       */
+/*   Updated: 2020/11/20 06:03:16 by clbrunet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static int	ft_strdup_start_of_line(char *buf, char **line, int len)
 {
