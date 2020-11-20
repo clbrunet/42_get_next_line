@@ -92,12 +92,12 @@ static int	end(int bytes_read, int len, char **line, char *buf)
 
 int			get_next_line(int fd, char **line)
 {
-	static char	bufs[257][BUFFER_SIZE + 1] = {{0}};
+	static char	bufs[259][BUFFER_SIZE + 1] = {{0}};
 	int			bytes_read;
 	int			len;
 	int			have_to_read;
 
-	if (BUFFER_SIZE <= 0 || fd < 0 || !line || fd > 256)
+	if (BUFFER_SIZE <= 0 || fd < 0 || !line || fd > 258)
 		return (-1);
 	len = 0;
 	have_to_read = !(bufs[fd][0]);
