@@ -80,7 +80,8 @@ static int	end(int bytes_read, int len, char **line, char *buf)
 		return (-1);
 	else if (!len)
 	{
-		*line = malloc(sizeof(char));
+		if (!(*line = malloc(sizeof(char))))
+			return (-1);
 		line[0][0] = '\0';
 		return (0);
 	}

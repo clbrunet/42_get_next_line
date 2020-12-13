@@ -17,6 +17,7 @@
 # include <stdlib.h>
 
 char	*ft_strcpy(char *dst, const char *src);
+int		failed_malloc(void *to_free);
 
 int		get_next_line(int fd, char **line);
 
